@@ -1,12 +1,12 @@
 
 export interface ICourse {
-  id: string;
+  id: number;
   title: string;
 }
 
 class Course implements ICourse {
 
-  id: string;
+  id: number;
   title: string;
 
   constructor({

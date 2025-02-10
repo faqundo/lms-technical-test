@@ -1,0 +1,44 @@
+import { ICourseRepository } from "../../infrastructure/interfaces/ICourseRepository";
+import Course from "../../domain/entities/Course";
+
+export class CreateCourseUseCase {
+  private courseRepository: ICourseRepository;
+
+  constructor(courseRepository: ICourseRepository) {
+    this.courseRepository = courseRepository;
+  }
+
+  public async execute(input: CreateCourseInput): Promise<CreateCourseOutput> {
+    // Validar los datos de entrada
+    if (!input.title || !input.description) {
+      throw new Error("Title and description are required");
+    }
+
+    // Crear la entidad Course
+    const course = new Course();
+    course.title = input.title;
+    course.description = input.description;
+
+    // Guardar el curso en la base de datos
+    await this.courseRepository.save(course);
+
+    // Devolver el resultado
+    return {
+      id: course.id,
+      title: course.title,
+      description: course.description,
+    };
+  }
+}
+
+// DTOs (Data Transfer Objects)
+export interface CreateCourseInput {
+  title: string;
+  description: string;
+}
+
+export interface CreateCourseOutput {
+  id: number;
+  title: string;
+  description: string;
+}
