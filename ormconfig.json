@@ -1,0 +1,13 @@
+{
+  "type": "mysql",
+  "host": "mysql",
+  "port": 3306,
+  "username": "test",
+  "password": "test",
+  "database": "test",
+  "synchronize": false,
+  "logging": true,
+  "entities": ["src/entities/**/*.ts"], // Ruta a tus entidades
+  "migrations": ["src/migrations/**/*.ts"], // Ruta a tus migraciones
+  "subscribers": ["src/subscribers/**/*.ts"] // Ruta a tus subscriptores
+}

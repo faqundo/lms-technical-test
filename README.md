@@ -87,3 +87,88 @@ docker-compose exec node npm run test
 ```
 
 
+additional modules:
+
+ORM: TypeORM
+Elegí TypeORM porque es un ORM que soporta múltiples bases de datos, lo cual es muy útil para este caso, ya que podríamos cambiar a MongoDB o a cualquier otra base de datos relacional sin problemas.
+
+typeorm: El ORM principal.
+mysql2: El driver de MySQL compatible con TypeORM.
+reflect-metadata: Necesario para que TypeORM funcione con decoradores.
+
+Adopción de arquitectura basada en capas (Clean Architecture):
+Principios Clave:
+Capa de Dominio : Contiene las entidades y casos de uso centrales del sistema.
+Capa de Aplicación : Implementa la lógica de negocio específica del sistema.
+Capa de Infraestructura : Maneja detalles técnicos como bases de datos, APIs externas, etc.
+Capa de Presentación : Controla las interacciones con el usuario (en este caso, las rutas y controladores).
+
+src/
+├── application/                  # Capa de aplicación
+│   ├── usecases/                 # Casos de uso
+│   │   ├── CreateCourseUseCase.ts  # Crear un curso
+│   │   ├── GetCourseUseCase.ts    # Obtener un curso
+│   │   ├── CompleteLessonUseCase.ts # Marcar una lección como completada
+│   │   └── GetUserProgressUseCase.ts # Obtener el progreso de un usuario
+│   │
+│   └── interfaces/               # Interfaces abstractas
+│       ├── ICourseRepository.ts    # Contrato para el repositorio de cursos
+│       ├── IModuleRepository.ts    # Contrato para el repositorio de módulos
+│       ├── ILessonRepository.ts    # Contrato para el repositorio de lecciones
+│       └── IUserProgressRepository.ts # Contrato para el progreso del usuario
+│
+├── domain/                       # Capa de dominio
+│   ├── entities/                 # Entidades del dominio
+│   │   ├── Course.ts             # Modelo Course con atributos y validaciones
+│   │   ├── Module.ts             # Modelo Module
+│   │   ├── Lesson.ts             # Modelo Lesson
+│   │   └── UserProgress.ts       # Modelo UserProgress
+│   │
+│   └── exceptions/               # Excepciones de dominio
+│       ├── InvalidCourseError.ts   # Ejemplo: Excepción para cursos inválidos
+│       └── InvalidLessonError.ts   # Ejemplo: Excepción para lecciones inválidas
+│
+├── infrastructure/               # Capa de infraestructura
+│   ├── persistence/              # Implementaciones de persistencia
+│   │   ├── CourseRepository.ts     # Repositorio TypeORM para Cursos
+│   │   ├── ModuleRepository.ts     # Repositorio TypeORM para Módulos
+│   │   ├── LessonRepository.ts     # Repositorio TypeORM para Lecciones
+│   │   └── UserProgressRepository.ts # Repositorio TypeORM para Progreso
+│   │
+│   └── web/                      # Configuración del servidor
+│       └── ExpressServer.ts      # Configuración de Express
+│
+├── interfaces/                   # Interfaces específicas (HTTP, CLI, etc.)
+│   ├── http/                     # Interfaz HTTP
+│   │   ├── controllers/          # Controladores
+│   │   │   ├── CourseController.ts # Controlador para endpoints de Curso
+│   │   │   ├── ModuleController.ts # Controlador para endpoints de Módulo
+│   │   │   └── LessonController.ts # Controlador para endpoints de Lección
+│   │   └── routes/               # Rutas
+│   │       ├── courseRoutes.ts     # Rutas relacionadas con Curso
+│   │       ├── moduleRoutes.ts     # Rutas relacionadas con Módulo
+│   │       └── lessonRoutes.ts     # Rutas relacionadas con Lección
+│   │
+│   └── cli/                      # Interfaz CLI (opcional)
+│       └── SeedCommand.ts        # Ejemplo: Comando para sembrar datos iniciales
+│
+└── tests/                        # Pruebas
+    ├── unit/                     # Pruebas unitarias
+    │   ├── application/          # Pruebas para casos de uso
+    │   │   ├── CreateCourseUseCase.test.ts
+    │   │   ├── GetCourseUseCase.test.ts
+    │   │   └── CompleteLessonUseCase.test.ts
+    │   └── domain/               # Pruebas para entidades
+    │       ├── CourseEntity.test.ts
+    │       ├── ModuleEntity.test.ts
+    │       └── LessonEntity.test.ts
+    │
+    └── integration/              # Pruebas de integración
+        ├── controllers/          # Pruebas para controladores
+        │   ├── CourseController.test.ts
+        │   ├── ModuleController.test.ts
+        │   └── LessonController.test.ts
+        └── infrastructure/       # Pruebas para repositorios y servicios
+            ├── CourseRepository.test.ts
+            ├── ModuleRepository.test.ts
+            └── LessonRepository.test.ts

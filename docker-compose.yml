@@ -29,7 +29,7 @@ services:
     volumes:
       - mysql_storage:/var/lib/mysql
     ports:
-      - 3306:33066
+      - 3306:3306
 
 volumes:
   mongo_storage:

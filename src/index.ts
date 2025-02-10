@@ -1,10 +1,10 @@
 import express from 'express';
 import cors from 'cors';
 
-import CourseRoutes from './modules/courses/routes/courses.routes';
-import ModuleRoutes from './modules/modules/routes/modules.routes';
-import LessonRoutes from './modules/lessons/routes/lessons.routes';
-import CompletionRoutes from './modules/completions/routes/completions.routes';
+import CourseRoutes from './interfaces/http/routes/courses.routes';
+import ModuleRoutes from './interfaces/http/routes/modules.routes';
+import LessonRoutes from './interfaces/http/routes/lessons.routes';
+import CompletionRoutes from './interfaces/http/routes/completions.routes';
 
 const PORT = 3124;
 

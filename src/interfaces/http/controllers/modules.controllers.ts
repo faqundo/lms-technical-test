@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { sendMethodNotImplemented } from "../../../shared/responses.utils";
-import { LessonResponseDTO } from "../../lessons/controllers/lessons.controllers";
+import { LessonResponseDTO } from "../../../interfaces/http/controllers/lessons.controllers";
 
 export interface ModuleResponseDTO {
   id: string;
