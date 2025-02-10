@@ -1,8 +1,8 @@
 import { DataSource } from "typeorm";
-import Course from "../../../domain/entities/Course";
-import Module from "../../../domain/entities/Module";
-import Lesson from "../../../domain/entities/Lesson";
-import Completion from "../../../domain/entities/Completion";
+import Course from "../../domain/entities/Course";
+import Module from "../../domain/entities/Module";
+import Lesson from "../../domain/entities/Lesson";
+import Completion from "../../domain/entities/Completion";
 
 export const AppDataSource = new DataSource({
   type: "mysql",

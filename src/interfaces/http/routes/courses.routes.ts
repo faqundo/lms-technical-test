@@ -6,10 +6,10 @@ const courseController = new CourseController();
 
 
 router.route('/')
-  //.get(courseController.getCourses)
+  .get(courseController.getCourses)
   .post(courseController.createCourse);
 
 router.route('/:courseId')
-  //.get(courseController.getCourseById);
+  .get(courseController.getCourseById);
 
 export default router;

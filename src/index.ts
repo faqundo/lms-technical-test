@@ -1,4 +1,4 @@
-import express from 'express';
+/* import express from 'express';
 import cors from 'cors';
 
 import CourseRoutes from './interfaces/http/routes/courses.routes';
@@ -24,4 +24,22 @@ const server = apiService.listen(PORT, () => {
 });
 
 export default apiService;
-export { server };
+export { server }; */
+
+
+// src/index.ts
+import { AppDataSource } from "./infrastructure/database/DataSource";
+import { ExpressServer } from "./infrastructure/web/ExpressServer";
+
+// Inicializar la conexión a la base de datos
+AppDataSource.initialize()
+  .then(() => {
+    console.log("Database connection established");
+
+    // Crear e iniciar el servidor Express
+    const server = new ExpressServer();
+    server.listen(3000); // Puerto 3000
+  })
+  .catch((error) => {
+    console.error("Error during Data Source initialization:", error);
+  });

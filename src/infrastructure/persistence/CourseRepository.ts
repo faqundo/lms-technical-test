@@ -1,6 +1,6 @@
 import Course from "../../domain/entities/Course";
 import { ICourseRepository } from "../../application/interfaces/ICourseRepository";
-import AppDataSource from "./database/DataSource";
+import AppDataSource from "../database/DataSource";
 
 export class CourseRepository implements ICourseRepository {
   readonly repository = AppDataSource.getRepository(Course);
