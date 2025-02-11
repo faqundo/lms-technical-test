@@ -10,7 +10,7 @@ export class CourseRepository implements ICourseRepository {
     this.repository = AppDataSource.getRepository(Course);
   }
 
-  async save(course: Course): Promise<void> {
+  async save(course: Course): Promise<any> {
     await this.repository.save(course);
   }
 

@@ -12,8 +12,8 @@ export class Course {
   @Column({ type: "text", nullable: true })
   description?: string;
 
-  @OneToMany(() => Module, (module) => module.course)
-  modules!: Module[];
+  @OneToMany(() => Module, (module) => module.course, { nullable: true })
+  modules?: Module[];
 
   @BeforeInsert()
   validate() {

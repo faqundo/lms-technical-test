@@ -6,7 +6,7 @@ import { Completion } from "../../domain/entities/Completion";
 
 export const AppDataSource = new DataSource({
   type: "mysql",
-  host: "mysql", // Nombre del servicio MySQL en docker-compose.yml
+  host: "localhost", // Nombre del servicio MySQL en docker-compose.yml
   port: 3306,
   username: "test",
   password: "test",

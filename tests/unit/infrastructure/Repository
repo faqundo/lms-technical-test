@@ -1,0 +1,107 @@
+import { AppDataSource } from "../../../src/infrastructure/database/DataSource";
+import { CourseRepository } from "../../../src/infrastructure/persistence/CourseRepository";
+import { LessonRepository } from "../../../src/infrastructure/persistence/LessonRepository";
+import { ModuleRepository } from "../../../src/infrastructure/persistence/ModuleRepository";
+import { Course } from "../../../src/domain/entities/Course";
+import { Lesson } from "../../../src/domain/entities/Lesson";
+import { Module } from "../../../src/domain/entities/Module";
+import app from "../../../src/index"
+import request from "supertest";
+
+/* describe("Full repository CRUD operations", () => {
+  let courseRepository: CourseRepository;
+  let lessonRepository: LessonRepository;
+  let moduleRepository: ModuleRepository
+
+  beforeEach(async () => {
+    await AppDataSource.initialize(); // Inicializar la conexión a la base de datos
+    courseRepository = new CourseRepository();
+    lessonRepository = new LessonRepository();
+    moduleRepository = new ModuleRepository();
+  });
+
+  afterEach(async () => {
+    // Limpiar la base de datos después de cada test
+    await AppDataSource.destroy();
+  });
+
+  it.skip("should create a course and later add modules", async () => {
+    // Paso 1: Crear un curso sin módulos
+    const courseRepository = new CourseRepository();
+    const newCourse = new Course();
+    newCourse.title = "Test Course";
+    // No asignamos módulos en este paso
+    await courseRepository.save(newCourse);
+
+    // Paso 2: Crear un módulo
+    const moduleRepository = new ModuleRepository();
+    const newModule = new Module();
+    newModule.title = "Test Module";
+    // Asocia el módulo al curso
+    newCourse.modules = [newModule];
+    await moduleRepository.save(newModule);
+    await courseRepository.save(newCourse); // Guardamos nuevamente el curso con el módulo asociado
+
+    // Paso 3: Hacer la solicitud para obtener los cursos
+    const response = await request(app).get("/api/courses");
+
+    // Paso 4: Verificar la respuesta
+    expect(response.status).toBe(200);
+    expect(response.body).toBeInstanceOf(Array); // Verifica que devuelve una lista de cursos
+    expect(response.body.some((course: any) => course.title === "Test Course")).toBe(true); // Verifica que el curso creado está en la lista
+  });
+
+  it.skip("should create, update, and delete courses and lessons", async () => {
+    // 1. Crear un curso
+    const newCourse = new Course();
+    newCourse.title = "Test Course";
+    await courseRepository.save(newCourse);
+
+    const createdCourse = await courseRepository.findById(newCourse.id);
+
+    expect(createdCourse).not.toBeNull();
+    expect(createdCourse?.title).toBe("Test Course");
+
+    // 2. Crear una lección asociada al curso
+    const newLesson = new Lesson();
+    newLesson.title = "Test Lesson";
+    await lessonRepository.save(newLesson);
+
+    const createdLesson = await lessonRepository.findById(newLesson.id);
+
+    expect(createdLesson).not.toBeNull();
+    expect(createdLesson?.title).toBe("Test Lesson");
+
+    // 3. Actualizar el curso
+    if (createdCourse) {
+      createdCourse.title = "Updated Test Course";
+      await courseRepository.save(createdCourse);
+
+      const updatedCourse = await courseRepository.findById(createdCourse.id);
+      expect(updatedCourse?.title).toBe("Updated Test Course");
+    }
+
+    // 4. Actualizar la lección
+    if (createdLesson) {
+      createdLesson.title = "Updated Test Lesson";
+      await lessonRepository.save(createdLesson);
+
+      const updatedLesson = await lessonRepository.findById(createdLesson.id);
+      expect(updatedLesson?.title).toBe("Updated Test Lesson");
+    }
+
+    // 5. Eliminar la lección
+    if (createdLesson) {
+      await lessonRepository.delete(createdLesson.id);
+      const deletedLesson = await lessonRepository.findById(createdLesson.id);
+      expect(deletedLesson).toBeNull();
+    }
+
+    // 6. Eliminar el curso
+    if (createdCourse) {
+      await courseRepository.delete(createdCourse.id);
+      const deletedCourse = await courseRepository.findById(createdCourse.id);
+      expect(deletedCourse).toBeNull();
+    }
+  });
+}); */

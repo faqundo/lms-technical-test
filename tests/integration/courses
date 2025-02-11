@@ -1,0 +1,33 @@
+import { AppDataSource } from "../../src/infrastructure/database/DataSource";
+import { CacheService } from "../../src/shared/cache";
+import app from "../../src/index";
+import request from "supertest";  // Asegúrate de tener 'supertest' instalado para las pruebas HTTP
+import { CourseRepository } from "../../src/infrastructure/persistence/CourseRepository";
+import { Course } from "../../src/domain/entities/Course";
+
+describe("Courses Integration Tests", () => {
+  beforeAll(async () => {
+    //await AppDataSource.initialize(); // Inicializa la conexión a la base de datos
+  });
+
+  afterAll(async () => {
+    //await AppDataSource.destroy(); // Cierra la conexión a la base de datos
+    await CacheService.getInstance().delete("courses:list"); // Limpia la caché después de las pruebas
+  });
+
+  it("should return cached courses", async () => {
+    // Paso 1: Crear un curso
+    const courseRepository = new CourseRepository();
+    const newCourse = new Course();
+    newCourse.title = "Test Course";
+    await courseRepository.save(newCourse); // Guarda el curso en la base de datos
+
+    // Paso 2: Hacer la solicitud para obtener los cursos
+    const response = await request(app).get("/api/courses");
+
+    // Paso 3: Verificar la respuesta
+    expect(response.status).toBe(200);
+    expect(response.body).toBeInstanceOf(Array); // Verifica que devuelve una lista de cursos
+    expect(response.body.some((course: any) => course.title === "Test Course")).toBe(true); // Verifica que el curso creado está en la lista
+  });
+});

@@ -7,7 +7,7 @@
   "database": "test",
   "synchronize": false,
   "logging": true,
-  "entities": ["src/entities/**/*.ts"], // Ruta a tus entidades
+  "entities": ["src/domain/entities/**/*.ts"], // Ruta a tus entidades
   "migrations": ["src/migrations/**/*.ts"], // Ruta a tus migraciones
   "subscribers": ["src/subscribers/**/*.ts"] // Ruta a tus subscriptores
 }
