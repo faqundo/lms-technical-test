@@ -13,6 +13,8 @@ import { GetCourseUseCase } from "../../../application/usecases/GetCourseUseCase
 import { UpdateCourseUseCase } from "../../../application/usecases/UpdateCourseUseCase";
 import { DeleteCourseUseCase } from "../../../application/usecases/DeleteCourseUseCase";
 import { CourseMapper } from "../../../application/mappers/courseMapper";
+import { CacheService } from "../../../shared/cache";
+
 
 
 // DTOs
@@ -36,6 +38,9 @@ export class CourseController {
   readonly updateCourseUseCase: UpdateCourseUseCase;
   readonly deleteCourseUseCase: DeleteCourseUseCase;
 
+  readonly cacheService = CacheService.getInstance();
+
+
   constructor() {
     this.createCourseUseCase = new CreateCourseUseCase(new CourseRepository());
     this.getCourseUseCase = new GetCourseUseCase(new CourseRepository());
@@ -43,15 +48,30 @@ export class CourseController {
     this.deleteCourseUseCase = new DeleteCourseUseCase(new CourseRepository());
   }
 
+  
+
 
   // Obtener todos los cursos
   public async getCourses(req: Request, res: Response): Promise<void> {
-    try {
-      const courses = await this.getCourseUseCase.execute();
-      const dtos = courses.map(CourseMapper.toDTO);
-      sendOk(res, dtos);
-    } catch (error: any) {
-      sendBadRequest(res, error.message);    }
+    const cacheKey = "courses:list";
+
+    const cachedCourses = await this.cacheService.get(cacheKey);
+
+    if (cachedCourses) {
+      sendOk(res, JSON.parse(cachedCourses)); // Devuelve desde caché si existe
+    }else {
+      try {
+        const courses = await this.getCourseUseCase.execute();
+        const dtos = courses.map(CourseMapper.toDTO);
+
+        // Almacena en caché la respuesta por 5 minutos (300 segundos)
+        await this.cacheService.set(cacheKey, JSON.stringify(dtos), 300);
+        
+        sendOk(res, dtos);
+      } catch (error: any) {
+        sendBadRequest(res, error.message);    }
+    }
+    
   }
 
   // Crear un curso

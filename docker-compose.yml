@@ -10,6 +10,13 @@ services:
       - 3124:3124
     depends_on:
       - mysql
+      - redis
+  redis:
+    image: redis:alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data     
   mysql:
     image: mysql
     environment:
@@ -24,3 +31,4 @@ services:
 
 volumes:
   mysql_storage:
+  redis_data:
