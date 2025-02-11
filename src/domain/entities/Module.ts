@@ -1,33 +1,28 @@
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany, BeforeInsert } from "typeorm";
+import { Course } from "./Course";
+import { Lesson } from "./Lesson";
 
-export interface IModule {
-  id: string;
-  title: string;
-  isRootModule: boolean;
-  moduleId: string;
-  courseId: string;
-}
+@Entity()
+export class Module {
+  @PrimaryGeneratedColumn()
+  id!: number;
 
-class Module implements IModule {
+  @Column({ type: "varchar", length: 255 })
+  title!: string;
 
-  id: string;
-  title: string;
-  isRootModule: boolean;
-  moduleId: string;
-  courseId: string;
+  @ManyToOne(() => Course, (course) => course.modules)
+  course!: Course;
 
-  constructor({
-    id,
-    title,
-    isRootModule,
-    moduleId,
-    courseId,
-  }: IModule) {
-    this.id = id;
-    this.title = title;
-    this.isRootModule = isRootModule;
-    this.moduleId = moduleId;
-    this.courseId = courseId;
+  @OneToMany(() => Lesson, (lesson) => lesson.module)
+  lessons!: Lesson[];
+
+  @BeforeInsert()
+  validate() {
+    if (!this.title) {
+      throw new Error("Title is required");
+    }
+    if (!this.course) {
+      throw new Error("Course association is required");
+    }
   }
 }
-
-export default Module;

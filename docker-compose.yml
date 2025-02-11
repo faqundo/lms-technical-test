@@ -9,16 +9,7 @@ services:
     ports:
       - 3124:3124
     depends_on:
-      - mongo
       - mysql
-
-  mongo:
-    image: mongo
-    volumes:
-      - mongo_storage:/data/db
-    ports:
-      - 27017:27124
-
   mysql:
     image: mysql
     environment:
@@ -32,5 +23,4 @@ services:
       - 3306:3306
 
 volumes:
-  mongo_storage:
   mysql_storage:

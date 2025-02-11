@@ -10,6 +10,8 @@ router.route('/')
   .post(courseController.createCourse);
 
 router.route('/:courseId')
-  .get(courseController.getCourseById);
+  .get(courseController.getCourseById)
+  .put(courseController.updateCourse)
+  .delete(courseController.deleteCourse)
 
 export default router;

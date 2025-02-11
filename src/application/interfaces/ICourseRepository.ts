@@ -1,7 +1,9 @@
-import Course from "../../domain/entities/Course";
+import { Course } from "../../domain/entities/Course";
 
 export interface ICourseRepository {
   save(course: Course): Promise<void>;
   findById(id: number): Promise<Course | null>;
+  findByIdWithModulesAndLessons(id: number): Promise<any>
   findAll(): Promise<Course[]>;
+  delete(id: number): Promise<boolean>;
 }

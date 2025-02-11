@@ -1,20 +1,24 @@
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, BeforeInsert } from "typeorm";
+import { Lesson } from "./Lesson";
 
-export interface ICompletion {
-  id: string;
-  userId: string;
-  lessonId: string;
-}
+@Entity()
+export class Completion {
+  @PrimaryGeneratedColumn()
+  id!: number;
 
-class Completion implements ICompletion {
-  id: string;
-  userId: string;
-  lessonId: string;
+  @Column({ type: "varchar", length: 255 })
+  userId!: string;
 
-  constructor(completion: ICompletion) {
-    this.id = completion.id;
-    this.userId = completion.userId;
-    this.lessonId = completion.lessonId;
+  @ManyToOne(() => Lesson, (lesson) => lesson.completions)
+  lesson!: Lesson;
+
+  @BeforeInsert()
+  validate() {
+    if (!this.userId) {
+      throw new Error("User ID is required");
+    }
+    if (!this.lesson) {
+      throw new Error("Lesson association is required");
+    }
   }
 }
-
-export default Completion;

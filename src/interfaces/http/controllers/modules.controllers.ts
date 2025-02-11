@@ -5,14 +5,9 @@ import { LessonResponseDTO } from "../../../interfaces/http/controllers/lessons.
 export interface ModuleResponseDTO {
   id: string;
   title: string;
-  is_root_module: boolean;
-  module_id: string;
   course_id: string;
-}
+  lessons: LessonResponseDTO;
 
-export interface ModuleResponsePopulatedDTO extends ModuleResponseDTO {
-  lessons: LessonResponseDTO[];
-  modules: ModuleResponsePopulatedDTO[];
 }
 
 export const createModule = async (req: Request, res: Response) => {

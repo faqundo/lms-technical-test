@@ -4,7 +4,6 @@ import { sendMethodNotImplemented } from "../../../shared/responses.utils";
 export interface LessonResponseDTO {
   id: string;
   title: string;
-  module_id: string;
   is_completed: boolean;
 }
 

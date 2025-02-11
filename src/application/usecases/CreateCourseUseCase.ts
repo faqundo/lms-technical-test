@@ -1,8 +1,8 @@
-import { ICourseRepository } from "../../infrastructure/interfaces/ICourseRepository";
-import Course from "../../domain/entities/Course";
+import { ICourseRepository } from "../interfaces/ICourseRepository";
+import { Course } from "../../domain/entities/Course";
 
 export class CreateCourseUseCase {
-  private courseRepository: ICourseRepository;
+  readonly courseRepository: ICourseRepository;
 
   constructor(courseRepository: ICourseRepository) {
     this.courseRepository = courseRepository;
@@ -16,8 +16,8 @@ export class CreateCourseUseCase {
 
     // Crear la entidad Course
     const course = new Course();
-    course.title = input.title;
-    course.description = input.description;
+    course.title = input.title
+    course.description = input.description
 
     // Guardar el curso en la base de datos
     await this.courseRepository.save(course);
@@ -34,11 +34,11 @@ export class CreateCourseUseCase {
 // DTOs (Data Transfer Objects)
 export interface CreateCourseInput {
   title: string;
-  description: string;
+  description?: string;
 }
 
 export interface CreateCourseOutput {
   id: number;
   title: string;
-  description: string;
+  description?: string;
 }
