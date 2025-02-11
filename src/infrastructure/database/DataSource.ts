@@ -1,8 +1,8 @@
 import { DataSource } from "typeorm";
 import { Course } from "../../domain/entities/Course";
-import Module from "../../domain/entities/Module";
-import Lesson from "../../domain/entities/Lesson";
-import Completion from "../../domain/entities/Completion";
+import { Module } from "../../domain/entities/Module";
+import { Lesson } from "../../domain/entities/Lesson";
+import { Completion } from "../../domain/entities/Completion";
 
 export const AppDataSource = new DataSource({
   type: "mysql",
@@ -12,7 +12,7 @@ export const AppDataSource = new DataSource({
   password: "test",
   database: "test",
   entities: [Course, Module, Lesson, Completion], // Agrega aquí todas las entidades
-  synchronize: false, // Desactiva sincronización automática
+  synchronize: true,
   logging: true, // Habilita logs de consultas
 });
 

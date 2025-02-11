@@ -9,7 +9,7 @@ const redisClient = new Redis({
 export class CacheService {
   private static instance: CacheService;
 
-  private constructor(readonly client: Redis.Redis) {}
+  private constructor(readonly client: Redis) {}
 
   public static getInstance(): CacheService {
     if (!CacheService.instance) {

@@ -18,15 +18,14 @@ export class CreateCourseUseCase {
     const course = new Course();
     course.title = input.title
     course.description = input.description
-
+    
     // Guardar el curso en la base de datos
-    await this.courseRepository.save(course);
-
+    const savedCourse = await this.courseRepository.save(course);
     // Devolver el resultado
     return {
-      id: course.id,
-      title: course.title,
-      description: course.description,
+      id: savedCourse.id,
+      title: savedCourse.title,
+      description: savedCourse.description,
     };
   }
 }

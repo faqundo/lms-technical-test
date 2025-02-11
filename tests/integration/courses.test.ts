@@ -2,6 +2,7 @@
 import request from "supertest";
 import { AppDataSource } from "../../src/infrastructure/database/DataSource";
 import { CacheService } from "../../src/shared/cache";
+import app from "../../src/index"
 
 describe("Courses Integration Tests", () => {
   beforeAll(async () => {

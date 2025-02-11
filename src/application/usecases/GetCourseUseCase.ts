@@ -15,38 +15,31 @@ export class GetCourseUseCase {
     return this.courseRepository.findAll();
   }
 
-  /* public async getById(id: number): Promise<Course | null> {
-    return this.courseRepository.findById(id);
-  } */
+  public async getById(id: number, userId?: string): Promise<CourseResponsePopulatedDTO> {
+    const course = await this.courseRepository.findByIdWithModulesAndLessons(id);
 
-    public async getById(id: number, userId?: string): Promise<CourseResponsePopulatedDTO> {
-      const course = await this.courseRepository.findByIdWithModulesAndLessons(id);
-  
-      if (!course) {
-        throw new Error("Course not found");
-      }
-  
-      // Calcular total de lecciones
-      const totalLessons = calculateTotalLessons(course.modules);
-        
-      // Calcular lecciones completadas por el usuario
-      const completedLessons = userId
-      ? calculateCompletedLessons(course.modules, userId)
-      : 0;  
-      
-      // Calcular porcentaje de completado
-      const percentage = calculateCompletionPercentage(totalLessons, completedLessons);
-      
-      const dto = CourseMapper.toPopulatedDTO({
-        ...course,
-        completion: {
-          total_lessons: totalLessons,
-          completed_lessons: completedLessons,
-          percentage,
-        },
-      });
-
-      // Construir el DTO
-      return dto
+    if (!course) {
+      throw new Error("Course not found");
     }
+    // Calcular total de lecciones
+    const totalLessons = calculateTotalLessons(course.modules);
+
+    // Calcular lecciones completadas por el usuario
+    const completedLessons = userId
+    ? calculateCompletedLessons(course.modules, userId)
+    : 0;  
+
+    // Calcular porcentaje de completado
+    const percentage = calculateCompletionPercentage(totalLessons, completedLessons);
+
+    const dto = CourseMapper.toPopulatedDTO({
+      ...course,
+        totalLessons: totalLessons,
+        completedLessons: completedLessons,
+        percentage,
+        userId
+    });
+    // Construir el DTO
+    return dto
+  }
 }

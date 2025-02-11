@@ -24,13 +24,13 @@ export class CourseMapper {
         percentage: course.percentage || 0
       },
       modules: course.modules?.map((module: any) => ({
-        id: module.id.toString(),
+        id: module.id?.toString(),
         title: module.title,
-        course_id: module.course_id.toString(),
+        course_id: course.id?.toString() ?? "",
         lessons: module.lessons?.map((lesson: any) => ({
           id: lesson.id.toString(),
           title: lesson.title,
-          is_completed: lesson.is_completed,
+          is_completed: lesson.completions?.some((completion: any) => completion.userId === course.userId),
         })) || [],
       })),
     };

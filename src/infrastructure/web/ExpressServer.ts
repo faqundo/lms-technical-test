@@ -4,7 +4,7 @@ import cors from "cors";
 import apiRoutes from "../../interfaces/http/routes/api.routes";
 
 export class ExpressServer {
-  private app: express.Application;
+  readonly app: express.Application;
 
   constructor() {
     this.app = express();

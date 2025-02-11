@@ -21,13 +21,8 @@ export class LessonRepository implements ILessonRepository {
     });
   }
 
-  public async findCourseByLessonId(lessonId: number): Promise<any | null> {
+  public async findCourseByLessonId(lessonId: number): Promise<any> {
     const lesson = await this.findByIdWithCourse(lessonId);
-
-    if (!lesson || !lesson.module || !lesson.module.course) {
-      return null; // No se encontró el curso asociado
-    }
-
-    return lesson.module.course;
+    return lesson?.module?.course ?? null;
   }
 }

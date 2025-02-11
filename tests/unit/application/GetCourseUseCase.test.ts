@@ -31,9 +31,7 @@ describe("GetCourseUseCase", () => {
     };
 
     mockRepository.findByIdWithModulesAndLessons.mockResolvedValue(mockCourse);
-
     const result = await useCase.getById(1, "123");
-
     expect(result).toEqual({
       id: "1",
       title: "Test Course",

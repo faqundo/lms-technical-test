@@ -13,6 +13,7 @@ describe("CreateCourseUseCase", () => {
     } as unknown as jest.Mocked<ICourseRepository>;
 
     useCase = new CreateCourseUseCase(mockRepository);
+    
   });
 
   it("should create a new course", async () => {
@@ -29,9 +30,8 @@ describe("CreateCourseUseCase", () => {
     mockRepository.save.mockResolvedValue(mockCourse);
 
     const result = await useCase.execute(input);
-
     expect(result).toEqual({
-      id: "1", // Convertido a string
+      id: 1, // Convertido a string
       title: "Test Course",
       description: "This is a test course",
     });
